@@ -13,12 +13,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
+      // darkTheme: AppTheme.darkTheme,
       routes: {
         SplashScreen.routeName : (_) => SplashScreen(),
         HomeScreen.routeName : (_) => HomeScreen()
       },
-      initialRoute: SplashScreen.routeName,
+      initialRoute: HomeScreen.routeName,
     );
   }
 }

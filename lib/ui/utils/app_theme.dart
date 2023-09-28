@@ -12,21 +12,26 @@ abstract class AppTheme {
       fontWeight: FontWeight.bold, fontSize: 20, color: AppColors.black);
 
   static ThemeData lightTheme = ThemeData(
-    primaryColor: AppColors.primary,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.primary,
-      elevation: 0,
-      titleTextStyle: appBarTextStyle,
-    ),
-    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        selectedIconTheme: IconThemeData(size: 32),
-        unselectedIconTheme: IconThemeData(size: 32),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        selectedItemColor: AppColors.primary,
-        unselectedItemColor: AppColors.grey),
-    scaffoldBackgroundColor: AppColors.accent,
-  );
+      primaryColor: AppColors.primary,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.primary,
+        elevation: 0,
+        titleTextStyle: appBarTextStyle,
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          selectedIconTheme: IconThemeData(size: 32),
+          unselectedIconTheme: IconThemeData(size: 32),
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          selectedItemColor: AppColors.primary,
+          unselectedItemColor: AppColors.grey),
+      scaffoldBackgroundColor: AppColors.accent,
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        shape: StadiumBorder(
+            side: BorderSide(
+                style: BorderStyle.solid, color: AppColors.white, width: 4)),
+      ),
+      dividerTheme: DividerThemeData(thickness: 3, color: AppColors.primary));
 
   static ThemeData darkTheme = ThemeData();
 }
