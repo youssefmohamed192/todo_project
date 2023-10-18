@@ -7,7 +7,7 @@ abstract class AppTheme {
   static const TextStyle taskTittleTextStyle = TextStyle(
       fontWeight: FontWeight.bold, fontSize: 22, color: AppColors.primary);
   static const TextStyle taskDescriptionTextStyle = TextStyle(
-      fontWeight: FontWeight.normal, fontSize: 20, color: AppColors.lightBlack);
+      fontWeight: FontWeight.normal, fontSize: 18, color: AppColors.lightBlack);
   static const TextStyle bottomSheetTittleTextStyle = TextStyle(
       fontWeight: FontWeight.bold, fontSize: 20, color: AppColors.black);
 

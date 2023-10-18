@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:todo_project/model/todo_dm.dart';
 import 'package:todo_project/ui/utils/app_assets.dart';
 import 'package:todo_project/ui/utils/app_colors.dart';
 import 'package:todo_project/ui/utils/app_theme.dart';
 
 class TodoWidget extends StatelessWidget {
+  final TodoDM model;
+
+  const TodoWidget({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +46,14 @@ class TodoWidget extends StatelessWidget {
               const SizedBox(
                 width: 14,
               ),
-              const Expanded(
+              Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text("play basketball",
-                        style: AppTheme.taskTittleTextStyle),
+                    Text(model.title, style: AppTheme.taskTittleTextStyle),
                     Text(
-                      "description",
+                      model.description,
                       style: AppTheme.taskDescriptionTextStyle,
                       textAlign: TextAlign.start,
                     )
@@ -58,6 +61,9 @@ class TodoWidget extends StatelessWidget {
                 ),
               ),
               Container(
+                  decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(8)),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
                   child: const ImageIcon(

@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // to make bottom sheet take padding from keyboard when writing (BUG)
                     // and should make the isScrollControlled: true
                     padding: MediaQuery.of(context).viewInsets,
-                    child: const AddBottomSheet(),
+                    child:  AddBottomSheet(),
                   ));
         },
         child: const Icon(Icons.add),
