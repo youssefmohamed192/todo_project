@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_project/model/app_user.dart';
+import 'package:todo_project/provider/list_provider.dart';
+import 'package:todo_project/ui/screens/auth/login_screen.dart';
 import 'package:todo_project/ui/screens/bottom_sheet/add_bottom_sheet.dart';
 import 'package:todo_project/ui/screens/home/tabs/list_tab/list_tab.dart';
 import 'package:todo_project/ui/screens/home/tabs/settings_tab/settings_tab.dart';
@@ -13,9 +17,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentSelectedTab = 0;
+  late ListProvider provider;
 
   @override
   Widget build(BuildContext context) {
+    provider = Provider.of(context);
     return Scaffold(
       appBar: buildAppBar(),
       bottomNavigationBar: buildBottomNav(),
@@ -28,6 +34,18 @@ class _HomeScreenState extends State<HomeScreen> {
   PreferredSizeWidget buildAppBar() => AppBar(
         title: const Text("To Do List"),
         toolbarHeight: MediaQuery.of(context).size.height * .12,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: InkWell(
+                onTap: () {
+                  AppUser.currentUser = null;
+                  provider.todos.clear();
+                  Navigator.pushReplacementNamed(context, LoginScreen.routName);
+                },
+                child: const Icon(Icons.logout)),
+          )
+        ],
       );
 
   Widget buildBottomNav() => BottomAppBar(
@@ -60,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // to make bottom sheet take padding from keyboard when writing (BUG)
                     // and should make the isScrollControlled: true
                     padding: MediaQuery.of(context).viewInsets,
-                    child:  AddBottomSheet(),
+                    child: AddBottomSheet(),
                   ));
         },
         child: const Icon(Icons.add),

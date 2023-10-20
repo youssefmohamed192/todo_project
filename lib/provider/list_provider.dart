@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_project/model/app_user.dart';
 import 'package:todo_project/model/todo_dm.dart';
 
 class ListProvider extends ChangeNotifier {
@@ -7,7 +8,8 @@ class ListProvider extends ChangeNotifier {
   DateTime selectedDay = DateTime.now();
 
   refreshTodoList() async {
-    CollectionReference<TodoDM> todosCollection = FirebaseFirestore.instance
+    CollectionReference<TodoDM> todosCollection = AppUser.getCollection()
+        .doc(AppUser.currentUser!.id)
         .collection(TodoDM.collectionName)
         .withConverter<TodoDM>(fromFirestore: (docSnapshot, _) {
       Map json = docSnapshot.data() as Map;
@@ -37,8 +39,16 @@ class ListProvider extends ChangeNotifier {
     //     i--;
     //   }
     // }
-    
-
+    // better solution.
+    todos = todos.where((todo) {
+      if (todo.date.day != selectedDay.day ||
+          todo.date.month != selectedDay.month ||
+          todo.date.year != selectedDay.year) {
+        return false;
+      } else {
+        return true;
+      }
+    }).toList();
     notifyListeners();
   }
 }
