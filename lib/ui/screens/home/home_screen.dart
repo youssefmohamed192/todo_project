@@ -43,8 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: ImageIcon(AssetImage(AppAssets.settingsIcon)), label: "")
           ],
           onTap: (index) {
-            index = currentSelectedTab;
-            setState(() {});
+            setState(() {
+              currentSelectedTab = index;
+            });
           },
           currentIndex: currentSelectedTab,
         ),

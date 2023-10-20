@@ -14,7 +14,7 @@ class _ListTabState extends State<ListTab> {
   late ListProvider provider;
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       provider.refreshTodoList();
     });
@@ -38,10 +38,13 @@ class _ListTabState extends State<ListTab> {
               ],
             ),
             CalendarTimeline(
-              initialDate: DateTime.now(),
+              initialDate: provider.selectedDay,
               firstDate: DateTime.now().subtract(const Duration(days: 365)),
               lastDate: DateTime.now().add(const Duration(days: 365)),
-              onDateSelected: (date) => print(date),
+              onDateSelected: (date) {
+                provider.selectedDay = date;
+                provider.refreshTodoList();
+              },
               leftMargin: 20,
               monthColor: AppColors.white,
               dayColor: AppColors.primary,

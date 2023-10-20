@@ -1,32 +1,44 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_project/model/todo_dm.dart';
 
-import '../model/todo_dm.dart';
-
-class ListProvider extends ChangeNotifier{
+class ListProvider extends ChangeNotifier {
   List<TodoDM> todos = [];
+  DateTime selectedDay = DateTime.now();
 
   refreshTodoList() async {
-    CollectionReference<TodoDM> todosCollection =
-    FirebaseFirestore.instance.collection(TodoDM.collectionName)
-        .withConverter<TodoDM>(
-        fromFirestore: (docSnapshot, _){
-          Map json = docSnapshot.data() as Map;
-          TodoDM todo = TodoDM.fromJson(json);
-          return todo;
-        },
-        toFirestore: (todoDm, _){
-          return todoDm.toJson();
-        });
-    QuerySnapshot<TodoDM> todoSnapshot = await todosCollection.get();
+    CollectionReference<TodoDM> todosCollection = FirebaseFirestore.instance
+        .collection(TodoDM.collectionName)
+        .withConverter<TodoDM>(fromFirestore: (docSnapshot, _) {
+      Map json = docSnapshot.data() as Map;
+      TodoDM todo = TodoDM.fromJson(json);
+      return todo;
+    }, toFirestore: (todoDm, _) {
+      return todoDm.toJson();
+    });
+    QuerySnapshot<TodoDM> todoSnapshot = await todosCollection
+        .orderBy("date")
+        // .where("date", isEqualTo: selectedDay)
+        .get();
     List<QueryDocumentSnapshot<TodoDM>> docs = todoSnapshot.docs;
     // for(int i = 0; i < docs.length ; i++){
     //   todos.add(docs[i].data());
     // }
     /// better solution
-    todos = docs.map((docSnapshot){
+    todos = docs.map((docSnapshot) {
       return docSnapshot.data();
     }).toList();
+
+    // for (int i = 0; i < todos.length; i++) {
+    //   if (todos[i].date.day != selectedDay.day ||
+    //       todos[i].date.month != selectedDay.month ||
+    //       todos[i].date.year != selectedDay.year){
+    //     todos.removeAt(i);
+    //     i--;
+    //   }
+    // }
+    
+
     notifyListeners();
   }
 }

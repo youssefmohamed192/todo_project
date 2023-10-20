@@ -39,6 +39,7 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
           Text("Select Date",
               style: AppTheme.bottomSheetTittleTextStyle
                   .copyWith(fontWeight: FontWeight.normal,color: AppColors.lightBlack)),
+          // instead of inkwell you can use GestureDetector().
           InkWell(
             onTap: (){
               showMyDatePicker();
