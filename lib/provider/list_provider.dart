@@ -4,6 +4,9 @@ import 'package:todo_project/model/app_user.dart';
 import 'package:todo_project/model/todo_dm.dart';
 
 class ListProvider extends ChangeNotifier {
+  ThemeMode currentTheme = ThemeMode.light;
+  String currentLocale = "en";
+
   List<TodoDM> todos = [];
   DateTime selectedDay = DateTime.now();
 
@@ -49,6 +52,43 @@ class ListProvider extends ChangeNotifier {
         return true;
       }
     }).toList();
+    notifyListeners();
+  }
+
+  Future<void> todoIsDone(TodoDM todoDM) async {
+    await AppUser.getCollection()
+        .doc(AppUser.currentUser!.id)
+        .collection(TodoDM.collectionName)
+        .doc(todoDM.id)
+        .set(todoDM.toJson());
+    refreshTodoList();
+  }
+
+  Future<void> todoDelete(String taskID) async {
+    await AppUser.getCollection()
+        .doc(AppUser.currentUser!.id)
+        .collection(TodoDM.collectionName)
+        .doc(taskID)
+        .delete();
+    refreshTodoList();
+  }
+
+  Future<void> todoSaveChanges(TodoDM todoDM) async {
+    await AppUser.getCollection()
+        .doc(AppUser.currentUser!.id)
+        .collection(TodoDM.collectionName)
+        .doc(todoDM.id)
+        .set(todoDM.toJson());
+    refreshTodoList();
+  }
+
+  changeModeTheme(ThemeMode newModeTheme) {
+    currentTheme = newModeTheme;
+    notifyListeners();
+  }
+
+  changeCurrentLocale(String newLocale) {
+    currentLocale = newLocale;
     notifyListeners();
   }
 }

@@ -12,6 +12,7 @@ class ListTab extends StatefulWidget {
 
 class _ListTabState extends State<ListTab> {
   late ListProvider provider;
+
   @override
   void initState() {
     super.initState();
@@ -23,7 +24,7 @@ class _ListTabState extends State<ListTab> {
   @override
   Widget build(BuildContext context) {
     provider = Provider.of(context);
-    if(provider.todos.isEmpty) {
+    if (provider.todos.isEmpty) {
       provider.refreshTodoList();
     }
     return Column(
@@ -33,8 +34,18 @@ class _ListTabState extends State<ListTab> {
           child: Stack(children: [
             Column(
               children: [
-                Expanded(flex: 3,child: Container(color: AppColors.primary,)),
-                Expanded(flex: 7,child: Container(color: AppColors.accent,)),
+                Expanded(
+                    flex: 3,
+                    child: Container(
+                      color: AppColors.primary,
+                    )),
+                Expanded(
+                    flex: 7,
+                    child: Container(
+                      color: provider.currentTheme == ThemeMode.light
+                          ? AppColors.accent
+                          : AppColors.accentDark,
+                    )),
               ],
             ),
             CalendarTimeline(
@@ -46,22 +57,22 @@ class _ListTabState extends State<ListTab> {
                 provider.refreshTodoList();
               },
               leftMargin: 20,
-              monthColor: AppColors.white,
-              dayColor: AppColors.primary,
-              activeDayColor: AppColors.primary,
-              activeBackgroundDayColor: AppColors.white,
+              monthColor: provider.currentTheme == ThemeMode.light ? AppColors.white : AppColors.thirdColor,
+              dayColor: provider.currentTheme == ThemeMode.light ? AppColors.primary : AppColors.white,
+              activeDayColor: provider.currentTheme == ThemeMode.light ? AppColors.primary : AppColors.white,
+              activeBackgroundDayColor: provider.currentTheme == ThemeMode.light ? AppColors.white : AppColors.thirdColor,
               dotsColor: AppColors.transparent,
             ),
           ]),
         ),
         Expanded(
           child: ListView.builder(
-              itemCount: provider.todos.length, itemBuilder: (context, index) =>
-              TodoWidget(model: provider.todos[index],)),
+              itemCount: provider.todos.length,
+              itemBuilder: (context, index) => TodoWidget(
+                    model: provider.todos[index],
+                  )),
         ),
       ],
     );
   }
-
-
 }

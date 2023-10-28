@@ -23,17 +23,26 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
   Widget build(BuildContext context) {
     provider = Provider.of(context);
     return Container(
+      decoration: BoxDecoration(
+          color: provider.currentTheme == ThemeMode.light
+              ? AppColors.white
+              : AppColors.thirdColor),
       height: MediaQuery.of(context).size.height * .4,
       padding: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text("Add New task",
+          Text("Add New task",
               textAlign: TextAlign.center,
-              style: AppTheme.bottomSheetTittleTextStyle),
+              style: provider.currentTheme == ThemeMode.light
+                  ? AppTheme.bottomSheetTittleTextStyle
+                  : AppTheme.bottomSheetTittleTextStyle
+                      .copyWith(color: AppColors.white)),
           const SizedBox(height: 16),
           MyTextField(
-              hintText: "Enter task title", controller: titleController),
+            hintText: "Enter task title",
+            controller: titleController,
+          ),
           const SizedBox(height: 8),
           MyTextField(
               hintText: "Enter task description",
@@ -41,7 +50,10 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
           const SizedBox(height: 16),
           Text("Select Date",
               style: AppTheme.bottomSheetTittleTextStyle.copyWith(
-                  fontWeight: FontWeight.normal, color: AppColors.lightBlack)),
+                  fontWeight: FontWeight.normal,
+                  color: provider.currentTheme == ThemeMode.light
+                      ? AppColors.lightBlack
+                      : AppColors.white)),
           // instead of inkwell you can use GestureDetector().
           InkWell(
             onTap: () {
@@ -54,11 +66,20 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
                     fontWeight: FontWeight.normal, color: AppColors.grey)),
           ),
           const Spacer(),
-          ElevatedButton(
-              onPressed: () {
-                addTodoToFireStore();
-              },
-              child: const Text("Add"))
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 80),
+            child: ElevatedButton(
+                onPressed: () {
+                  addTodoToFireStore();
+                },
+                child: const Text("Add"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+              ),
+            ),
+          )
         ],
       ),
     );

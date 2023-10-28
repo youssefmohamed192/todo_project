@@ -7,6 +7,7 @@ import 'package:todo_project/ui/screens/bottom_sheet/add_bottom_sheet.dart';
 import 'package:todo_project/ui/screens/home/tabs/list_tab/list_tab.dart';
 import 'package:todo_project/ui/screens/home/tabs/settings_tab/settings_tab.dart';
 import 'package:todo_project/ui/utils/app_assets.dart';
+import 'package:todo_project/ui/utils/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = "home";
@@ -32,8 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   PreferredSizeWidget buildAppBar() => AppBar(
-        title: const Text("To Do List"),
-        toolbarHeight: MediaQuery.of(context).size.height * .12,
+        title: currentSelectedTab == 0 ? const Text("To Do List") : const Text("Settings"),
+        toolbarHeight: MediaQuery.of(context).size.height * .16,
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -41,9 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {
                   AppUser.currentUser = null;
                   provider.todos.clear();
-                  Navigator.pushReplacementNamed(context, LoginScreen.routName);
+                  Navigator.pushReplacementNamed(context, LoginScreen.routeName);
                 },
-                child: const Icon(Icons.logout)),
+                child: Icon(Icons.logout,color: provider.currentTheme == ThemeMode.light
+                    ? AppColors.white : AppColors.black,)),
           )
         ],
       );

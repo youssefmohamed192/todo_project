@@ -9,7 +9,7 @@ import 'package:todo_project/ui/utils/app_theme.dart';
 import 'package:todo_project/ui/utils/dialog_utils.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const String routName = "login";
+  static const String routeName = "login";
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();

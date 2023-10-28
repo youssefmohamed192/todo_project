@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_project/provider/list_provider.dart';
 import 'package:todo_project/ui/screens/home/home_screen.dart';
 import 'package:todo_project/ui/utils/app_assets.dart';
 
@@ -10,7 +12,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -25,8 +26,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ListProvider provider = Provider.of(context);
     return Scaffold(
-      body: Image.asset(AppAssets.splash),
+      body: provider.currentTheme == ThemeMode.light
+          ? Image.asset(AppAssets.splash)
+          : Image.asset(AppAssets.darkSplash),
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,16 +24,18 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    ListProvider provider = Provider.of(context);
     return MaterialApp(
+      themeMode: provider.currentTheme,
       theme: AppTheme.lightTheme,
-      // darkTheme: AppTheme.darkTheme,
+      darkTheme: AppTheme.darkTheme,
       routes: {
         SplashScreen.routeName: (_) => SplashScreen(),
         HomeScreen.routeName: (_) => HomeScreen(),
-        LoginScreen.routName: (_) => LoginScreen(),
-        RegisterScreen.routName: (_) => RegisterScreen()
+        LoginScreen.routeName: (_) => LoginScreen(),
+        RegisterScreen.routName: (_) => const RegisterScreen()
       },
-      initialRoute: LoginScreen.routName,
+      initialRoute: LoginScreen.routeName,
     );
   }
 }
